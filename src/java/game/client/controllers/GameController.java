@@ -1,6 +1,6 @@
-package game.controllers;
+package game.client.controllers;
 
-import game.connectBetweenServerAndJavaFX.Singleton;
+import game.server.utils.Singleton;
 import javafx.concurrent.Service;
 import javafx.concurrent.Task;
 import javafx.fxml.FXML;
@@ -11,19 +11,20 @@ import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.StackPane;
-import javafx.scene.text.Text;
 import javafx.scene.text.TextAlignment;
 
 import java.io.File;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.net.MalformedURLException;
 import java.net.Socket;
+import java.net.URISyntaxException;
 import java.net.URL;
+import java.nio.file.Paths;
 import java.util.ResourceBundle;
 import java.util.Scanner;
 
 public class GameController implements Initializable {
-
     @FXML
     private ImageView board;
     @FXML
@@ -38,10 +39,6 @@ public class GameController implements Initializable {
     private Label figureWarrior;
     @FXML
     private ComboBox<String> emotionBox;
-    @FXML
-    private Text scoreMe;
-    @FXML
-    private Text scoreWarrior;
     @FXML
     private StackPane stackPane1;
     @FXML
@@ -67,7 +64,7 @@ public class GameController implements Initializable {
     private int warrior;
     private int me;
     private StackPane[] array = new StackPane[9];
-    private boolean myMove = true;
+    private boolean myMove = false;
     private int figure = Integer.MIN_VALUE;
     private boolean[] wasMove = new boolean[9];
 
@@ -88,26 +85,26 @@ public class GameController implements Initializable {
                 labelWarrior.setText(data[3]);
                 labelWarrior.setTextAlignment(TextAlignment.CENTER);
                 if (data[2].equals("1")) {
-                    setFoxImage(imageViewOne, "default");
+                    setSidImage(imageViewOne, "default");
                     me = 1;
                 } else {
-                    setDogImage(imageViewOne, "default");
+                    setAbrImage(imageViewOne, "default");
                     me = 2;
                 }
                 if (data[4].equals("1")) {
-                    setFoxImage(imageViewTwo, "default");
+                    setSidImage(imageViewTwo, "default");
                     warrior = 1;
                 } else {
-                    setDogImage(imageViewTwo, "default");
+                    setAbrImage(imageViewTwo, "default");
                     warrior = 2;
                 }
                 if (data[5].equals("X")) {
                     figureMe.setText(" X");
                     figure = 1;
                     myMove = true;
-                    figureWarrior.setText("〇️");
+                    figureWarrior.setText(" O");
                 } else {
-                    figureMe.setText("〇️");
+                    figureMe.setText(" O");
                     myMove = false;
                     figure = 2;
                     figureWarrior.setText(" X");
@@ -137,11 +134,11 @@ public class GameController implements Initializable {
                     if (split[0].equals("Emotion")) {
                         switch (warrior) {
                             case 1: {
-                                setFoxImage(imageViewTwo, split[1]);
+                                setSidImage(imageViewTwo, split[1]);
                                 break;
                             }
                             case 2: {
-                                setDogImage(imageViewTwo, split[1]);
+                                setAbrImage(imageViewTwo, split[1]);
                                 break;
                             }
                         }
@@ -164,11 +161,11 @@ public class GameController implements Initializable {
     private void uploadEmotion() {
         switch (me) {
             case 1: {
-                setFoxImage(imageViewOne, emotionBox.getValue());
+                setSidImage(imageViewOne, emotionBox.getValue());
                 break;
             }
             case 2: {
-                setDogImage(imageViewOne, emotionBox.getValue());
+                setAbrImage(imageViewOne, emotionBox.getValue());
                 break;
             }
         }
@@ -183,29 +180,47 @@ public class GameController implements Initializable {
         alert.show();
     }
 
-    private void setFoxImage(ImageView image, String which) {
-        File file = new File("src/pictures/fox-" + which + ".png");
-        Image imageOne = new Image(file.toURI().toString());
-        image.setImage(imageOne);
+    private void setSidImage(ImageView image, String which) {
+        try {
+            URL url = Paths.get("src/res/pictures/sid-" + which + ".png").toUri().toURL();
+            File file = new File(url.toURI());
+            Image imageOne = new Image(file.toURI().toString());
+            image.setImage(imageOne);
+        } catch (MalformedURLException e) {
+            e.printStackTrace();
+        } catch (URISyntaxException e) {
+            e.printStackTrace();
+        }
     }
 
-    private void setDogImage(ImageView image, String which) {
-        File file = new File("src/pictures/dog-" + which + ".png");
-        Image imageOne = new Image(file.toURI().toString());
-        image.setImage(imageOne);
+    private void setAbrImage(ImageView image, String which) {
+        try {
+            URL url = Paths.get("src/res/pictures/abr-" + which + ".png").toUri().toURL();
+            File file = new File(url.toURI());
+            Image imageOne = new Image(file.toURI().toString());
+            image.setImage(imageOne);
+        } catch (MalformedURLException e) {
+            e.printStackTrace();
+        } catch (URISyntaxException e) {
+            e.printStackTrace();
+        }
     }
 
     private void drawFigure(StackPane stackPane, int figure, int which) {
         ImageView imageView = null;
         if (figure == 2) {
-            File file = new File("src/pictures/circle.png");
+            File file = new File("src/res/pictures/circle.png");
             Image image = new Image(file.toURI().toString());
             imageView = new ImageView(image);
+            imageView.setScaleX(1.5);
+            imageView.setScaleY(1.5);
         }
         if (figure == 1) {
-            File file = new File("src/pictures/cross.png");
+            File file = new File("src/res/pictures/cross.png");
             Image image = new Image(file.toURI().toString());
             imageView = new ImageView(image);
+            imageView.setScaleX(1.5);
+            imageView.setScaleY(1.5);
         }
         stackPane.getChildren().add(imageView);
         wasMove[which] = true;
@@ -221,7 +236,6 @@ public class GameController implements Initializable {
         array[5] = stackPane6;
         array[6] = stackPane7;
         array[7] = stackPane8;
-        array[8] = stackPane9;
         stackPane1.setOnMouseClicked(t -> {
             if (myMove &&!wasMove[0]) {
                 drawFigure(stackPane1, figure, 0);

@@ -1,8 +1,7 @@
-package game.controllers;
+package game.client.controllers;
 
-import game.Main;
-import game.connectBetweenServerAndJavaFX.Singleton;
-import game.server.ServerMain;
+import game.client.application.Main;
+import game.server.utils.Singleton;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
@@ -15,10 +14,8 @@ import javafx.scene.layout.GridPane;
 import java.io.File;
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.net.ConnectException;
-import java.net.Socket;
-import java.net.URL;
-import java.net.UnknownHostException;
+import java.net.*;
+import java.nio.file.Paths;
 import java.util.ResourceBundle;
 
 public class StartController implements Initializable {
@@ -55,7 +52,8 @@ public class StartController implements Initializable {
                         Socket socket = new Socket("localhost", port);
                         Singleton.getInstance(socket);
                         new PrintWriter(socket.getOutputStream(), true).println(response);
-                        Main.loadScene(FXMLLoader.load(getClass().getResource("../fxmlScreens/waitScreen.fxml")), root);
+                        URL url = Paths.get("src/res/fxml/waitScreen.fxml").toUri().toURL();
+                        Main.loadScene(FXMLLoader.load(url), root);
                     }
                 } catch (NumberFormatException | UnknownHostException | ConnectException e) {
                     alertPort();
@@ -70,23 +68,24 @@ public class StartController implements Initializable {
     }
 
     @FXML
-    public void dogHasChosen() {
+    public void dogHasChosen() throws URISyntaxException, MalformedURLException {
         if (chooseCharacter == 1) {
-            File file = new File("src/pictures/fox-eye-start.png");
+            URL url = Paths.get("src/res/pictures/sid-eye-start.png").toUri().toURL();
+            File file = new File(url.toURI());
             Image imageOne = new Image(file.toURI().toString());
             imageViewOne.setImage(imageOne);
-            File fileTwo = new File("src/pictures/dog-eye-start-selected.png");
+            File fileTwo = new File("src/res/pictures/abr-eye-start-selected.png");
             Image imageTwo = new Image(fileTwo.toURI().toString());
             imageViewTwo.setImage(imageTwo);
             chooseCharacter = 2;
         } else {
             if (chooseCharacter == 2) {
                 chooseCharacter = Integer.MAX_VALUE;
-                File fileTwo = new File("src/pictures/dog-eye-start.png");
+                File fileTwo = new File("src/res/pictures/abr-eye-start.png");
                 Image imageTwo = new Image(fileTwo.toURI().toString());
                 imageViewTwo.setImage(imageTwo);
             } else {
-                File fileTwo = new File("src/pictures/dog-eye-start-selected.png");
+                File fileTwo = new File("src/res/pictures/abr-eye-start-selected.png");
                 Image imageTwo = new Image(fileTwo.toURI().toString());
                 imageViewTwo.setImage(imageTwo);
                 chooseCharacter = 2;
@@ -97,21 +96,21 @@ public class StartController implements Initializable {
     @FXML
     public void foxHasChosen() {
         if (chooseCharacter == 2) {
-            File fileTwo = new File("src/pictures/dog-eye-start.png");
+            File fileTwo = new File("src/res/pictures/abr-eye-start.png");
             Image imageTwo = new Image(fileTwo.toURI().toString());
             imageViewTwo.setImage(imageTwo);
-            File file = new File("src/pictures/fox-eye-start-selected.png");
+            File file = new File("src/res/pictures/sid-eye-start-selected.png");
             Image imageOne = new Image(file.toURI().toString());
             imageViewOne.setImage(imageOne);
             chooseCharacter = 1;
         } else {
             if (chooseCharacter == 1) {
                 chooseCharacter = Integer.MAX_VALUE;
-                File file = new File("src/pictures/fox-eye-start.png");
+                File file = new File("src/res/pictures/sid-eye-start.png");
                 Image imageOne = new Image(file.toURI().toString());
                 imageViewOne.setImage(imageOne);
             } else {
-                File file = new File("src/pictures/fox-eye-start-selected.png");
+                File file = new File("src/res/pictures/sid-eye-start-selected.png");
                 Image imageOne = new Image(file.toURI().toString());
                 imageViewOne.setImage(imageOne);
                 chooseCharacter = 1;
@@ -121,13 +120,21 @@ public class StartController implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-        File file = new File("src/pictures/fox-eye-start.png");
-        Image imageOne = new Image(file.toURI().toString());
-        imageViewOne.setImage(imageOne);
-        File fileTwo = new File("src/pictures/dog-eye-start.png");
-        Image imageTwo = new Image(fileTwo.toURI().toString());
-        imageViewTwo.setImage(imageTwo);
-        portField.setVisible(false);
+        URL picUrl = null;
+        try {
+            picUrl = Paths.get("src/res/pictures/sid-eye.png").toUri().toURL();
+            File file = new File(picUrl.toURI());
+            Image imageOne = new Image(file.toURI().toString());
+            imageViewOne.setImage(imageOne);
+            File fileTwo = new File("src/res/pictures/abr-eye.png");
+            Image imageTwo = new Image(fileTwo.toURI().toString());
+            imageViewTwo.setImage(imageTwo);
+            portField.setVisible(false);
+        } catch (MalformedURLException e) {
+            e.printStackTrace();
+        } catch (URISyntaxException e) {
+            e.printStackTrace();
+        }
     }
 
     //HELPERS

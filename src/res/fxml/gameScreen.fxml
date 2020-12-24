@@ -13,9 +13,8 @@
 <?import javafx.scene.shape.Line?>
 <?import javafx.scene.shape.Rectangle?>
 <?import javafx.scene.text.Font?>
-<?import javafx.scene.text.Text?>
 
-<AnchorPane prefHeight="720.0" prefWidth="1280.0" style="-fx-background-color: #FFFFFF;" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="game.controllers.GameController">
+<AnchorPane prefHeight="720.0" prefWidth="1280.0" style="-fx-background-color: #ffffff;" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="game.client.controllers.GameController">
 
     <ImageView fx:id="imageViewOne" fitHeight="150.0" fitWidth="150.0" layoutX="77.0" layoutY="48.0" pickOnBounds="true" preserveRatio="true" />
    <ImageView fx:id="board" fitHeight="728.0" fitWidth="774.0" layoutX="265.0" layoutY="-24.0">
@@ -60,10 +59,10 @@
     <ComboBox fx:id="emotionBox" layoutX="100.0" layoutY="325.0" prefWidth="100" promptText="Choose" style="-fx-background-color: black; -fx-text-fiill: #ffffff;" stylesheets="@../style/style.css">
         <items>
             <FXCollections fx:factory="observableArrayList">
-                <String fx:value="Laugh" />
-                <String fx:value="Wicked" />
-                <String fx:value="Wow" />
-                <String fx:value="Misunderstandings" />
+                <String fx:value="1" />
+                <String fx:value="2" />
+                <String fx:value="3" />
+                <String fx:value="4" />
             </FXCollections>
         </items>
       <opaqueInsets>
@@ -83,38 +82,11 @@
     <Line endX="1040" endY="300" fill="darkgrey" startX="1040" startY="240" strokeWidth="2" />
     <Line endX="1220" endY="300" fill="darkgrey" startX="1040" startY="300" strokeWidth="2" />
    <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#024d3a00" height="600.0" layoutX="367.0" layoutY="37.0" stroke="TRANSPARENT" strokeType="INSIDE" width="600.0" />
-   <Rectangle arcHeight="20.0" arcWidth="20.0" fill="#8da0b2" height="23.0" layoutX="87.0" layoutY="465.0" stroke="BLACK" strokeType="INSIDE" style="-fx-fill: grey;" width="130.0" />
 
-   <Text layoutX="96.0" layoutY="484.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Счёт" textAlignment="CENTER" wrappingWidth="109.0">
-      <font>
-         <Font size="19.0" />
-      </font>
-   </Text>
-
-   <Text fx:id="scoreMe" layoutX="89.0" layoutY="557.0" strokeType="OUTSIDE" strokeWidth="0.0" text="0" textAlignment="CENTER" wrappingWidth="126.09595489501953">
-      <font>
-         <Font size="59.0" />
-      </font>
-   </Text>
-
-   <Rectangle arcHeight="20.0" arcWidth="20.0" fill="#8da0b2" height="23.0" layoutX="1069.0" layoutY="465.0" stroke="BLACK" strokeType="INSIDE" style="-fx-fill: grey;" width="130.0" />
-
-   <Text layoutX="1076.0" layoutY="484.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Счёт" textAlignment="CENTER" wrappingWidth="109.0">
-      <font>
-         <Font size="19.0" />
-      </font>
-   </Text>
-
-   <Text fx:id="scoreWarrior" layoutX="1071.0" layoutY="567.0" strokeType="OUTSIDE" strokeWidth="0.0" text="0" textAlignment="CENTER" wrappingWidth="126.09595489501953">
-      <font>
-         <Font size="59.0" />
-      </font>
-   </Text>
-
-   <Line endX="477.0" endY="594.0" fill="darkgrey" layoutX="76.0" layoutY="9.0" startX="477.0" startY="62.0" strokeLineCap="ROUND" strokeWidth="5.0" />
-   <Line endX="477.0" endY="584.0" fill="darkgrey" layoutX="279.0" layoutY="18.0" startX="477.0" startY="51.0" strokeDashOffset="5.0" strokeLineCap="ROUND" strokeLineJoin="ROUND" strokeWidth="5.0" />
-   <Line endX="205.0" endY="212.0" fill="darkgrey" layoutX="179.0" layoutY="28.0" startX="748.0" startY="212.0" strokeLineCap="ROUND" strokeWidth="5.0" />
-   <Line endX="205.0" endY="212.0" fill="darkgrey" layoutX="180.0" layoutY="226.0" startX="748.0" startY="212.0" strokeLineCap="ROUND" strokeWidth="5.0" />
+   <Line endX="477.0" endY="594.0" fill="darkgrey" layoutX="76.0" layoutY="9.0" startX="477.0" startY="62.0" stroke="#ffffff80" strokeLineCap="ROUND" strokeWidth="5.0" />
+   <Line endX="477.0" endY="584.0" fill="darkgrey" layoutX="279.0" layoutY="18.0" startX="477.0" startY="51.0" stroke="#ffffff80" strokeDashOffset="5.0" strokeLineCap="ROUND" strokeLineJoin="ROUND" strokeWidth="5.0" />
+   <Line endX="205.0" endY="212.0" fill="darkgrey" layoutX="179.0" layoutY="28.0" startX="748.0" startY="212.0" stroke="#ffffff80" strokeLineCap="ROUND" strokeWidth="5.0" />
+   <Line endX="205.0" endY="212.0" fill="darkgrey" layoutX="180.0" layoutY="226.0" startX="748.0" startY="212.0" stroke="#ffffff80" strokeLineCap="ROUND" strokeWidth="5.0" />
     <StackPane fx:id="stackPane1" layoutX="374.0" layoutY="48.0" prefHeight="182.0" prefWidth="169.0" style="-fx-focus-traversable: #01513f;" />
     <StackPane fx:id="stackPane2" layoutX="565.0" layoutY="48.0" prefHeight="182.0" prefWidth="182.0" style="-fx-focus-traversable: #01513f;" />
     <StackPane fx:id="stackPane3" layoutX="767.0" layoutY="48.0" prefHeight="182.0" prefWidth="182.0" style="-fx-focus-traversable: #01513f;" />

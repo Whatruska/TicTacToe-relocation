@@ -1,7 +1,7 @@
-package game.controllers;
+package game.client.controllers;
 
-import game.Main;
-import game.connectBetweenServerAndJavaFX.Singleton;
+import game.client.application.Main;
+import game.server.utils.Singleton;
 import javafx.concurrent.Service;
 import javafx.concurrent.Task;
 import javafx.fxml.FXML;
@@ -9,11 +9,11 @@ import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.layout.HBox;
 import javafx.scene.shape.Circle;
-import javafx.util.Duration;
 
 import java.io.*;
 import java.net.Socket;
 import java.net.URL;
+import java.nio.file.Paths;
 import java.util.ResourceBundle;
 import java.util.Scanner;
 
@@ -44,7 +44,8 @@ public class WaitController implements Initializable {
                 if (t.getSource().getValue().equals("nextScreen")) {
                     try {
                         printWriter.println("Move to gameScreen");
-                        Main.loadScene(FXMLLoader.load(getClass().getResource("../fxmlScreens/gameScreen.fxml")), root);
+                        URL sceneUrl = Paths.get("src/res/fxml/gameScreen.fxml").toUri().toURL();
+                        Main.loadScene(FXMLLoader.load(sceneUrl), root);
                     } catch (IOException e) {
                         e.printStackTrace();
                     }

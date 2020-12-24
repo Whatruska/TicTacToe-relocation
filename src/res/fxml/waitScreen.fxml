@@ -14,7 +14,7 @@
 <?import javafx.scene.layout.HBox?>
 <HBox alignment="CENTER" xmlns="http://javafx.com/javafx"
       xmlns:fx="http://javafx.com/fxml"
-      fx:controller="game.controllers.WaitController"
+      fx:controller="game.client.controllers.WaitController"
       fx:id="root"
       prefHeight="720" prefWidth="1280">
 
